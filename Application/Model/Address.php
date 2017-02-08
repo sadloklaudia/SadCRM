@@ -3,7 +3,7 @@ namespace Application\Model;
 
 use Ouzo\Model;
 
-class User extends Model implements \JsonSerializable
+class Address extends Model
 {
     function __construct(array $attributes = [])
     {
@@ -11,20 +11,15 @@ class User extends Model implements \JsonSerializable
             'attributes' => $attributes,
             'hasMany' => [
                 'client' => [
-                    'class' => Client::class, 'foreignKey' => 'user_id'
+                    'class' => 'Client', 'foreignKey' => 'address_id'
                 ]
             ],
-            'fields' => ['name', "surname", "type", "login", "password", "created"]]);
+            'fields' => ["street", "number", "city", "postCode"]]);
     }
 
     public function validate()
     {
         parent::validate();
         $this->validateNotBlank($this->login, 'Login cannot be blank');
-    }
-
-    function jsonSerialize()
-    {
-        return $this->attributes();
     }
 }
