@@ -1,13 +1,8 @@
 <?php
 use Ouzo\Routing\Route;
 
-Route::get('/hello_world', 'hello_world#index');
+Route::get('/client/pesel/:pesel', 'clients#findByPesel');
+Route::get('/client/surname', 'clients#findBySurname');
 
-Route::get('/', 'users#index');
-Route::get('/fresh', 'users#fresh');
-Route::get('/:id/edit', 'users#edit');
-Route::get('/:id', 'users#show');
-
-Route::post('/', 'users#create');
-Route::put('/:id', 'users#update');
-Route::delete('/:id', 'users#destroy');
+Route::get('/user/name','users#findByName');
+Route::get('/user/surname','users#findBySurname');
