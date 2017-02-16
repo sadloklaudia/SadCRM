@@ -6,3 +6,4 @@ Route::get('/client/surname', 'clients#findBySurname');
 
 Route::get('/user/name','users#findByName');
 Route::get('/user/surname','users#findBySurname');
+Route::get('/mail','mail#sendMail');

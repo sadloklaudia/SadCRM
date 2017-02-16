@@ -13,7 +13,8 @@ class ClientsController extends Controller
         $clients = Client::where(['pesel' => $pesel])->fetchAll();
 
         echo json_encode([
-            'clients' => $clients
+            'hej' => [5, 7, 8, 56]
+//            'clients' => $clients
         ]);
     }
 
