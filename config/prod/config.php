@@ -10,4 +10,6 @@ $config['global']['prefix_system'] = '/SadCRM';
 $config['sql_dialect'] = '\\Ouzo\\Db\\Dialect\\MySqlDialect';
 $config['debug'] = true;
 
+$config['logger']['default']['class'] = 'Application\Model\OnScreenLogger';
+
 return $config;
