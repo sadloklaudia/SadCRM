@@ -3,12 +3,11 @@ namespace Application\Controller;
 
 use Ouzo\Controller;
 
-class MailController extends Controller
+class MailsController extends Controller
 {
-    function sendMail()
+    function singleMail()
     {
-
-        $to = 'sadloklaudia@gamil.com';
+        $to = 'wilkowski.kontakt@gamil.com';
         $subject = 'the subject';
         $message = 'hello';
         $headers = 'From: webmaster@example.com' . "\r\n" .
@@ -16,6 +15,5 @@ class MailController extends Controller
             'X-Mailer: PHP/' . phpversion();
 
         mail($to, $subject, $message, "");
-
     }
 }
