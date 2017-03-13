@@ -1,7 +1,8 @@
 <?php
 use Ouzo\Routing\Route;
 
-Route::get('/test', 'test#test');
+Route::get('/', 'tests#test');
+Route::get('/test', 'tests#test');
 
 Route::get('/client/pesel/:pesel', 'clients#findByPesel');
 Route::get('/client/surname', 'clients#findBySurname');

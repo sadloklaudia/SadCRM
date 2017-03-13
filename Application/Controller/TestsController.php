@@ -3,10 +3,10 @@ namespace Application\Controller;
 
 use Ouzo\Controller;
 
-class TestController extends Controller
+class TestsController extends Controller
 {
     public function test()
     {
-        echo 'Test works';
+        phpinfo();
     }
 }
