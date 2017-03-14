@@ -8,7 +8,6 @@ class TestsController extends Controller
 {
     public function test()
     {
-        $logger = Logger::getLogger(__CLASS__);
-        $logger->debug("Siema");
+        Logger::getLogger(__CLASS__)->debug("Siema");
     }
 }

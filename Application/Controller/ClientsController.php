@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Application\Model\Client;
 use Ouzo\Controller;
+use Ouzo\Utilities\Json;
 
 class ClientsController extends Controller
 {
@@ -12,7 +13,7 @@ class ClientsController extends Controller
 
         $clients = Client::where(['pesel' => $pesel])->fetchAll();
 
-        echo json_encode([
+        echo Json::encode([
             'hej' => [5, 7, 8, 56]
 //            'clients' => $clients
         ]);
@@ -20,11 +21,11 @@ class ClientsController extends Controller
 
     public function findBySurname()
     {
-        $surname = $this->params['surname'];
+        $clients = Client::where([
+            'surname' => $this->params['surname']
+        ])->fetchAll();
 
-        $clients = Client::where(['surname' => $surname])->fetchAll();
-
-        echo json_encode([
+        echo Json::encode([
             'clients' => $clients
         ]);
     }

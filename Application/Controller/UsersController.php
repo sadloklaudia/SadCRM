@@ -3,24 +3,25 @@ namespace Application\Controller;
 
 use Application\Model\User;
 use Ouzo\Controller;
+use Ouzo\Utilities\Json;
 
 class UsersController extends Controller
 {
     public function findByName()
     {
-        $name = $this->params['name'];
+        $user = User::where([
+            'name' => $this->params['name']
+        ])->fetchAll();
 
-        $user = User::where(['name' => $name])->fetchAll();
-
-        echo json_encode(['users' => $user]);
+        echo Json::encode(['users' => $user]);
     }
 
     public function findBySurname()
     {
-        $surname = $this->params['surname'];
+        $user = User::where([
+            'surname' => $this->params['surname']
+        ])->fetchAll();
 
-        $user = User::where(['surname' => $surname])->fetchAll();
-
-        echo json_encode(['users' => $user]);
+        echo Json::encode(['users' => $user]);
     }
 }
