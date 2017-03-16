@@ -38,7 +38,7 @@ class OnScreenLogger implements LoggerInterface
         $this->log('Fatal', $message);
     }
 
-    private function log($context, $message)
+    protected function log($context, $message)
     {
         echo "[$context] $message";
     }
