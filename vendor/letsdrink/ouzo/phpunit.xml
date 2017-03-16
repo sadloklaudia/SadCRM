@@ -1,7 +1,0 @@
-<phpunit bootstrap="bootstrap_test.php">
-    <groups>
-        <exclude>
-            <group>sqlite3</group>
-        </exclude>
-    </groups>
-</phpunit>
