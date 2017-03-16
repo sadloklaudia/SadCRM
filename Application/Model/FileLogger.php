@@ -13,6 +13,9 @@ class FileLogger extends OnScreenLogger
 
     protected function writeToFile($path, $data)
     {
+        if (!file_exists($path)) {
+            file_put_contents($path, "");
+        }
         $output = fopen($path, "w");
         fwrite($output, $data);
         fclose($output);
