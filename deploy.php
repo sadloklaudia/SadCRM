@@ -23,7 +23,7 @@ function deploy($name)
 function removeFolder($directoryName)
 {
     if (!is_dir($directoryName)) {
-        throw new Exception("Directory doesn't exists \"$directoryName\".");
+        return;
     }
     $directory = opendir($directoryName);
     while (false !== ($file = readdir($directory))) {
