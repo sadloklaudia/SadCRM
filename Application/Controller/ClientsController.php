@@ -7,15 +7,19 @@ use Ouzo\Utilities\Json;
 
 class ClientsController extends Controller
 {
+    public function init()
+    {
+        $this->header('Content-Type: application/json');
+    }
+
     public function findByPesel()
     {
-        $pesel = $this->params['pesel'];
-
-        $clients = Client::where(['pesel' => $pesel])->fetchAll();
+        $clients = Client::where([
+            'pesel' => $this->params['pesel']
+        ])->fetchAll();
 
         echo Json::encode([
-            'hej' => [5, 7, 8, 56]
-//            'clients' => $clients
+            'clients' => $clients
         ]);
     }
 
