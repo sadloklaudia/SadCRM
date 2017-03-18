@@ -14,7 +14,7 @@ function removeFolder($directoryName)
             if (is_dir($full)) {
                 removeFolder($full);
             } else {
-                if (is_file($full)) {
+                if (is_file($full) || is_link($full)) {
                     if (!is_writable($full)) {
                         makeWritable($full);
                     }
