@@ -6,7 +6,7 @@ deploy("SadCRM");
 function deploy($name)
 {
     try {
-        removeFolder($name);
+        removeFromFolder($name);
         echo "Removed folder $name.\n";
 
         mkdir($name);
@@ -20,7 +20,7 @@ function deploy($name)
     }
 }
 
-function removeFolder($directoryName)
+function removeFromFolder($directoryName)
 {
     if (!is_dir($directoryName)) {
         return;
@@ -30,7 +30,8 @@ function removeFolder($directoryName)
         if (!in_array($file, ['.', '..'])) {
             $full = $directoryName . '/' . $file;
             if (is_dir($full)) {
-                removeFolder($full);
+                removeFromFolder($full);
+                rmdir($full);
             } else {
                 if (is_file($full) || is_link($full)) {
                     if (!is_writable($full)) {
@@ -42,7 +43,6 @@ function removeFolder($directoryName)
         }
     }
     closedir($directory);
-    rmdir($directoryName);
 }
 
 function makeWritable($filename)
@@ -65,7 +65,7 @@ function extractFromZip($name)
         if (!$zip->open("$name.zip")) {
             throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
         }
-        if (!$zip->extractTo(getcwd() . DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR)) {
+        if (!$zip->extractTo(getcwd() . DIRECTORY_SEPARATOR)) {
             throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
         }
         echo "Extracted.\n";
