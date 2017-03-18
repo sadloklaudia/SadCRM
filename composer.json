@@ -34,7 +34,8 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "Application\\PostInstall::createLogFolder"
+      "Application\\PostInstall::createLogFolder",
+      "Application\\PostInstall::createConfigDevFolder"
     ]
   }
 }
