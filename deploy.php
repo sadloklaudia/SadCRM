@@ -55,6 +55,9 @@ function makeWritable($filename)
 
 function extractFromZip($name)
 {
+    if (!is_file("$name.zip")) {
+        throw new Exception("File \"$name.zip\" does not exists.");
+    }
     $zip = new ZipArchive();
     if ($zip->open("$name.zip")) {
         echo $zip->getStatusString() . "\n";
