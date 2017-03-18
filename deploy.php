@@ -5,7 +5,7 @@ header("Content-Type: text/plain");
 function removeFolder($directoryName)
 {
     if (!is_dir($directoryName)) {
-        throw new Exception("Error opening directory $directoryName");
+        throw new Exception("Directory doesn't exists \"$directoryName\".");
     }
     $directory = opendir($directoryName);
     while (false !== ($file = readdir($directory))) {
