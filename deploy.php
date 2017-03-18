@@ -61,12 +61,15 @@ function extractFromZip($name)
         throw new Exception("File \"$name.zip\" does not exists.");
     }
     $zip = new ZipArchive();
-    if ($zip->open("$name.zip")) {
-        echo $zip->getStatusString() . "\n";
-        $zip->extractTo(DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR);
-        $zip->close();
+    try {
+        if (!$zip->open("$name.zip")) {
+            throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
+        }
+        if (!$zip->extractTo(DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR)) {
+            throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
+        }
         echo "Extracted.\n";
-    } else {
-        throw new Exception("Could not unzup \"$name.zip\". " . $zip->getStatusString());
+    } finally {
+        $zip->close();
     }
 }
