@@ -7,10 +7,7 @@ function deploy($name)
 {
     try {
         removeFromFolder($name);
-        echo "Removed folder $name.\n";
-
-        mkdir($name);
-        echo "Created empty folder $name\n";
+        echo "Removed contents folder $name.\n";
 
         echo "Extracting \"$name.zip\"...\n";
         extractFromZip($name);
