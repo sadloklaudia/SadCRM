@@ -6,4 +6,5 @@ require 'vendor/autoload.php';
 define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 
 $bootstrap = new Bootstrap();
+putenv("environment=dev");
 $bootstrap->runApplication();
