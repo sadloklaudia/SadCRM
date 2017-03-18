@@ -6,7 +6,6 @@ class AddClients extends Ruckusing_Migration_Base
     {
         $clients = $this->create_table('clients');
 
-        $clients->column('id', 'integer');
         $clients->column('address_id', 'integer');
         $clients->column('user_id', 'integer');
         $clients->column('name', 'string');
@@ -16,7 +15,7 @@ class AddClients extends Ruckusing_Migration_Base
         $clients->column('phone2', 'string');
         $clients->column('mail', 'string');
         $clients->column('description', 'string');
-        $clients->column('vip', 'bool');
+        $clients->column('vip', 'boolean');
         $clients->column('created', 'datetime');
         $clients->column('products', 'string');
         $clients->column('sellChance', 'string');
