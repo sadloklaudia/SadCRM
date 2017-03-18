@@ -14,10 +14,12 @@ function removeFolder($directoryName)
             if (is_dir($full)) {
                 removeFolder($full);
             } else {
-                if (!is_writable($full)) {
-                    makeWritable($full);
+                if (is_file($full)) {
+                    if (!is_writable($full)) {
+                        makeWritable($full);
+                    }
+                    unlink($full);
                 }
-                unlink($full);
             }
         }
     }
@@ -41,7 +43,7 @@ function deployFor($name)
         mkdir($name);
         echo "Created empty folder $name\n";
     } catch (Exception $exception) {
-        echo "Could not remove $name! " . $exception->getMessage() . "\n";
+        echo "Could not remove \"$name\"! " . $exception->getMessage() . "\n";
     }
 }
 
