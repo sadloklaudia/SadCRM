@@ -1,6 +1,24 @@
 <?php
 
 header("Content-Type: text/plain");
+deploy("SadCRM");
+
+function deploy($name)
+{
+    try {
+        removeFolder($name);
+        echo "Removed folder $name.\n";
+
+        mkdir($name);
+        echo "Created empty folder $name\n";
+
+        echo "Extracting \"$name.zip\"...\n";
+        extractFromZip($name);
+
+    } catch (Exception $exception) {
+        echo "Could not deploy \"$name\". " . $exception->getMessage() . "\n";
+    }
+}
 
 function removeFolder($directoryName)
 {
@@ -29,23 +47,21 @@ function removeFolder($directoryName)
 
 function makeWritable($filename)
 {
-    echo "\"$filename\" is not writtable. Changing permission...\n";
+    echo "\"$filename\" is not writable. Changing permission...\n";
     if (!chmod($filename, 0777)) {
         throw new Exception("Found read-only file. Failed to change permission");
     }
 }
 
-function deployFor($name)
+function extractFromZip($name)
 {
-    echo "Removing folder $name...\n";
-    try {
-        removeFolder($name);
-        echo "Removed folder $name.\n";
-        mkdir($name);
-        echo "Created empty folder $name\n";
-    } catch (Exception $exception) {
-        echo "Could not remove \"$name\"! " . $exception->getMessage() . "\n";
+    $zip = new ZipArchive();
+    if ($zip->open("$name.zip")) {
+        echo $zip->getStatusString() . "\n";
+        $zip->extractTo(DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR);
+        $zip->close();
+        echo "Extracted.\n";
+    } else {
+        throw new Exception("Could not unzup \"$name.zip\". " . $zip->getStatusString());
     }
 }
-
-deployFor("SadCRM");
