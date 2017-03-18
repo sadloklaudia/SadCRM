@@ -65,7 +65,7 @@ function extractFromZip($name)
         if (!$zip->open("$name.zip")) {
             throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
         }
-        if (!$zip->extractTo(DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR)) {
+        if (!$zip->extractTo(getcwd() . DIRECTORY_SEPARATOR . "$name" . DIRECTORY_SEPARATOR)) {
             throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
         }
         echo "Extracted.\n";
