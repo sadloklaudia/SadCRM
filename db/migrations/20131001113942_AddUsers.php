@@ -15,4 +15,9 @@ class AddUsers extends Ruckusing_Migration_Base
 
         $users->finish();
     }
+
+    public function down()
+    {
+        $this->drop_table("users");
+    }
 }

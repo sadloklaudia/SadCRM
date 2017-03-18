@@ -26,4 +26,9 @@ class AddClients extends Ruckusing_Migration_Base
 
         $clients->finish();
     }
+
+    public function down()
+    {
+        $this->drop_table("clients");
+    }
 }
