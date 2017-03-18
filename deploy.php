@@ -47,9 +47,11 @@ function removeFolder($directoryName)
 
 function makeWritable($filename)
 {
-    echo "\"$filename\" is not writable. Changing permission...\n";
-    if (!chmod($filename, 0777)) {
-        throw new Exception("Found read-only file. Failed to change permission");
+    echo "\"$filename\" is not writable. Changing permission...";
+    if (chmod($filename, 0777)) {
+        echo " Ok.\n";
+    } else {
+        echo "Failed to change permission\n";
     }
 }
 
