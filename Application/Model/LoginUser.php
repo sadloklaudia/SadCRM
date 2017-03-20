@@ -1,6 +1,7 @@
 <?php
 namespace Application\Model;
 
+use Exception;
 use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Functions;
 use Ouzo\Utilities\Json;
@@ -27,11 +28,17 @@ class LoginUser
     public static function ifLogged(callable $function)
     {
         if (LoginUser::isLogged()) {
-            $result = Functions::call($function, self::$loggedUser);
-
-            echo Json::encode(
-                ['success' => true] + $result
-            );
+            try {
+                $result = Functions::call($function, self::$loggedUser);
+                echo Json::encode(
+                    ['success' => true] + $result
+                );
+            } catch (Exception $e) {
+                echo Json::encode([
+                    'success' => false,
+                    'message' => 'Exception: ' . $e->getMessage()
+                ]);
+            }
         } else {
             echo Json::encode([
                 'success' => false,
