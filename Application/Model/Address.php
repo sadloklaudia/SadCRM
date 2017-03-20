@@ -1,9 +1,10 @@
 <?php
 namespace Application\Model;
 
+use JsonSerializable;
 use Ouzo\Model;
 
-class Address extends Model
+class Address extends Model implements JsonSerializable
 {
     function __construct(array $attributes = [])
     {
@@ -21,5 +22,10 @@ class Address extends Model
     {
         parent::validate();
         $this->validateNotBlank($this->login, 'Login cannot be blank');
+    }
+
+    function jsonSerialize()
+    {
+        return $this->attributes();
     }
 }

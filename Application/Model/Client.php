@@ -21,7 +21,7 @@ class Client extends Model implements JsonSerializable
     public function validate()
     {
         parent::validate();
-        $this->validateNotBlank($this->login, 'Login cannot be blank');
+        $this->validateNotBlank($this->name, 'Name cannot be blank');
     }
 
     function jsonSerialize()
