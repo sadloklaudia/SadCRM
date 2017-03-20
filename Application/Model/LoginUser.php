@@ -31,7 +31,7 @@ class LoginUser
             try {
                 $result = Functions::call($function, self::$loggedUser);
                 echo Json::encode(
-                    ['success' => true] + $result
+                    ['success' => true] + ($result ?: [])
                 );
             } catch (Exception $e) {
                 echo Json::encode([

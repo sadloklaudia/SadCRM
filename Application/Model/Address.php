@@ -4,6 +4,12 @@ namespace Application\Model;
 use JsonSerializable;
 use Ouzo\Model;
 
+/**
+ * @property string street
+ * @property string number
+ * @property string city
+ * @property string postCode
+ */
 class Address extends Model implements JsonSerializable
 {
     function __construct(array $attributes = [])
@@ -21,7 +27,8 @@ class Address extends Model implements JsonSerializable
     public function validate()
     {
         parent::validate();
-        $this->validateNotBlank($this->login, 'Login cannot be blank');
+        $this->validateNotBlank($this->street, 'Street cannot be blank');
+        $this->validateNotBlank($this->number, 'Number cannot be blank');
     }
 
     function jsonSerialize()
