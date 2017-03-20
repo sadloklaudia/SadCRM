@@ -29,6 +29,8 @@ class Address extends Model implements JsonSerializable
         parent::validate();
         $this->validateNotBlank($this->street, 'Street cannot be blank');
         $this->validateNotBlank($this->number, 'Number cannot be blank');
+        $this->validateNotBlank($this->city, 'Number cannot be blank');
+        $this->validateNotBlank($this->postCode, 'Number cannot be blank');
     }
 
     function jsonSerialize()
