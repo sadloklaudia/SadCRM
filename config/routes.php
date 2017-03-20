@@ -4,8 +4,7 @@ use Ouzo\Routing\Route;
 Route::get('/', 'tests#test');
 Route::get('/test', 'tests#test');
 
-Route::get('/client/pesel', 'clients#findByPesel');
-Route::get('/client/surname', 'clients#findBySurname');
+Route::get('/client', 'clients#find');
 
 Route::get('/user/name','users#findByName');
 Route::get('/user/surname','users#findBySurname');

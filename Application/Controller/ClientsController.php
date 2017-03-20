@@ -2,8 +2,10 @@
 namespace Application\Controller;
 
 use Application\Model\Client;
+use Application\Model\LoginUser;
+use Application\Model\User;
 use Ouzo\Controller;
-use Ouzo\Utilities\Json;
+use Ouzo\Utilities\Arrays;
 
 class ClientsController extends Controller
 {
@@ -12,25 +14,15 @@ class ClientsController extends Controller
         $this->header('Content-Type: application/json');
     }
 
-    public function findByPesel()
+    public function find()
     {
-        $clients = Client::where([
-            'pesel' => $this->params['pesel']
-        ])->fetchAll();
+        LoginUser::login($this->params);
 
-        echo Json::encode([
-            'clients' => $clients
-        ]);
-    }
-
-    public function findBySurname()
-    {
-        $clients = Client::where([
-            'surname' => $this->params['surname']
-        ])->fetchAll();
-
-        echo Json::encode([
-            'clients' => $clients
-        ]);
+        LoginUser::ifLogged(function (User $user) {
+            return Client::where([
+                Arrays::filterByAllowedKeys($this->params, ['pesel', 'surname']),
+                'user_id' => $user->getId()
+            ])->fetchAll();
+        });
     }
 }

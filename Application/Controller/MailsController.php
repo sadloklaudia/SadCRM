@@ -5,6 +5,11 @@ use Ouzo\Controller;
 
 class MailsController extends Controller
 {
+    public function init()
+    {
+        $this->header('Content-Type: application/json');
+    }
+
     function singleMail()
     {
         $to = 'wilkowski.kontakt@gamil.com';
@@ -14,6 +19,6 @@ class MailsController extends Controller
             'Reply-To: webmaster@example.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
-        mail($to, $subject, $message, "");
+        mail($to, $subject, $message, $headers);
     }
 }

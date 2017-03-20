@@ -1,12 +1,18 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\LoginUser;
 use Application\Model\User;
 use Ouzo\Controller;
 use Ouzo\Utilities\Json;
 
 class UsersController extends Controller
 {
+    public function init()
+    {
+        $this->header('Content-Type: application/json');
+    }
+
     public function findByName()
     {
         $user = User::where([
@@ -23,5 +29,16 @@ class UsersController extends Controller
         ])->fetchAll();
 
         echo Json::encode(['users' => $user]);
+    }
+
+    public function changePassword()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function (User $user) {
+            $user->updateAttributes([
+                'password' => $this->params['new_password']
+            ]);
+        });
     }
 }
