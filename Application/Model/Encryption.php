@@ -23,12 +23,12 @@ class Encryption
         return $text . str_repeat(chr($pad), $pad);
     }
 
-    public static function decrypt($sStr, $sKey)
+    public static function decrypt($input, $key)
     {
         $decrypted = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            $sKey,
-            base64_decode($sStr),
+            $key,
+            base64_decode($input),
             MCRYPT_MODE_ECB
         );
         $dec_s = strlen($decrypted);
