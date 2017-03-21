@@ -1,7 +1,6 @@
 <?php
 namespace Application\Model;
 
-use Ouzo\Logger\Logger;
 use PHPMailer;
 
 class GoogleMailSender
@@ -47,7 +46,9 @@ class GoogleMailSender
 
     public function addRecipient($email)
     {
-        $this->mailer->AddAddress($email);
+        OutputBuffer::logOutput("Adding recipient", function () use ($email) {
+            $this->mailer->AddAddress($email);
+        });
     }
 
     public function send()
@@ -59,10 +60,8 @@ class GoogleMailSender
 
     protected function sendMessage()
     {
-        ob_start();
-        $result = $this->mailer->Send();
-        $logs = ob_get_clean();
-        Logger::getLogger(__CLASS__)->info($logs);
-        return $result;
+        return OutputBuffer::logOutput("Send e-mail message", function () {
+            return $this->mailer->Send();
+        });
     }
 }

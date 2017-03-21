@@ -4,7 +4,9 @@ namespace Application\Controller;
 use Application\Model\GoogleMailSender;
 use Application\Model\GoogleMailSendException;
 use Ouzo\Controller;
+use Ouzo\Utilities\Functions;
 use Ouzo\Utilities\Json;
+use Ouzo\Utilities\Strings;
 
 class MailsController extends Controller
 {
@@ -20,9 +22,9 @@ class MailsController extends Controller
         $mailSender->setSubject($this->params['subject']);
         $mailSender->setMessage($this->params['message']);
 
-        foreach (explode(',', $this->params['recipients']) as $recipient) {
+        $this->forEachRecipient(function ($recipient) use ($mailSender) {
             $mailSender->addRecipient($recipient);
-        }
+        });
 
         try {
             $mailSender->send();
@@ -34,6 +36,18 @@ class MailsController extends Controller
                 'success' => false,
                 'message' => $exception->getMessage()
             ]);
+        }
+    }
+
+    private function forEachRecipient(callable $callback)
+    {
+        $elements = preg_split('/[\ \n\,]+/', $this->params['recipients']);
+
+        foreach ($elements as $recipient) {
+            $recipient = Strings::trimToNull($recipient);
+            if (Strings::isNotBlank($recipient)) {
+                Functions::call($callback, $recipient);
+            }
         }
     }
 }
