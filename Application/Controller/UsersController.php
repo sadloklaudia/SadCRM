@@ -13,6 +13,15 @@ class UsersController extends Controller
         $this->header('Content-Type: application/json');
     }
 
+    public function login()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function (User $user) {
+            return ['user' => $user];
+        });
+    }
+
     public function findByName()
     {
         $user = User::where([

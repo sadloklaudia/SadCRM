@@ -19,7 +19,7 @@ class AddressesController extends Controller
 
         LoginUser::ifLogged(function () {
             Address::create(
-                Arrays::filterByAllowedKeys($this->params, ['street', 'number', 'city', 'postCode'])
+                Arrays::filterByAllowedKeys($this->params, Address::getFieldsWithoutPrimaryKey())
             );
         });
     }
@@ -29,10 +29,9 @@ class AddressesController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            $id = $this->params['id'];
-            $address = Address::findById($id);
+            $address = Address::findById($this->params['id']);
             $address->updateAttributes(
-                Arrays::filterByAllowedKeys($this->params, ['street', 'number', 'city', 'postCode'])
+                Arrays::filterByAllowedKeys($this->params, Address::getFieldsWithoutPrimaryKey())
             );
         });
     }

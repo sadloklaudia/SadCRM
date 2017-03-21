@@ -4,7 +4,16 @@ use Ouzo\Routing\Route;
 Route::get('/', 'tests#test');
 Route::get('/test', 'tests#test');
 
+
+Route::post('/address/create', 'addresses#createAddress');
+Route::post('/address/update', 'addresses#updateAddress');
+
+
 Route::get('/client', 'clients#find');
+Route::post('/client/create', 'clients#createClient');
+Route::post('/client/update', 'clients#updateClient');
+
+Route::post('/user/login', 'users#login');
 
 Route::get('/user/name','users#findByName');
 Route::get('/user/surname','users#findBySurname');

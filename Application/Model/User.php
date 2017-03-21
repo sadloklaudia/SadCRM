@@ -1,9 +1,10 @@
 <?php
 namespace Application\Model;
 
+use JsonSerializable;
 use Ouzo\Model;
 
-class User extends Model implements \JsonSerializable
+class User extends Model implements JsonSerializable
 {
     function __construct(array $attributes = [])
     {

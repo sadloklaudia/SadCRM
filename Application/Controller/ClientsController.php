@@ -3,7 +3,6 @@ namespace Application\Controller;
 
 use Application\Model\Client;
 use Application\Model\LoginUser;
-use Application\Model\User;
 use Ouzo\Controller;
 use Ouzo\Utilities\Arrays;
 
@@ -18,11 +17,33 @@ class ClientsController extends Controller
     {
         LoginUser::login($this->params);
 
-        LoginUser::ifLogged(function (User $user) {
+        LoginUser::ifLogged(function () {
             return Client::where([
-                Arrays::filterByAllowedKeys($this->params, ['pesel', 'surname']),
-                'user_id' => $user->getId()
+                Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
             ])->fetchAll();
+        });
+    }
+
+    public function createClient()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            Client::create(
+                Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
+            );
+        });
+    }
+
+    public function updateClient()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            $client = Client::findById($this->params['id']);
+            $client->updateAttributes(
+                Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
+            );
         });
     }
 }
