@@ -1,10 +1,10 @@
 <?php
-namespace Model;
+namespace Application\Model;
 
 class Password
 {
-    public static function hash($password)
+    public static function hash($password, $salt)
     {
-        return sha1($password);
+        return sha1($password . $salt);
     }
 }

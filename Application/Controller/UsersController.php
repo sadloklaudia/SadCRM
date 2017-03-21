@@ -18,7 +18,15 @@ class UsersController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function (User $user) {
-            return ['user' => $user];
+            return [
+                'user' => [
+                    'id' => $user->getId(),
+                    'login' => $user->login,
+                    'name' => $user->name,
+                    'surname' => $user->surname,
+                    'type' => $user->type,
+                    'created' => $user->created
+                ]];
         });
     }
 

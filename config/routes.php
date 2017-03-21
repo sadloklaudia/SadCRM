@@ -13,6 +13,7 @@ Route::get('/client', 'clients#find');
 Route::post('/client/create', 'clients#createClient');
 Route::post('/client/update', 'clients#updateClient');
 
+Route::get('/user/login', 'users#login');
 Route::post('/user/login', 'users#login');
 
 Route::get('/user/name','users#findByName');
@@ -30,5 +31,6 @@ Route::get('/report/user/phones/:interval', 'reports#phones');
 Route::get('/report/user/sales', 'reports#sales');
 Route::get('/report/user/:id', 'reports#user');
 
+Route::get('/mail', 'mails#singleMail');
 Route::post('/mail', 'mails#singleMail');
 Route::post('/mails', 'mails#manyMails');

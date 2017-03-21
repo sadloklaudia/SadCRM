@@ -2,7 +2,6 @@
 namespace Application\Model;
 
 use Exception;
-use Model\Password;
 use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Functions;
 use Ouzo\Utilities\Json;
@@ -19,10 +18,11 @@ class LoginUser
         $password = Arrays::getValue($credentials, 'password');
 
         if ($login && $password) {
-            self::$loggedUser = User::where([
-                'login' => $login,
-                'password' => Password::hash($password)
-            ])->fetch();
+            /** @var User $user */
+            $user = User::where(['login' => $login])->fetch();
+            if ($user->password == Password::hash($password, $user->salt)) {
+                self::$loggedUser = $user;
+            }
         }
     }
 
@@ -34,10 +34,10 @@ class LoginUser
                 echo Json::encode(
                     ['success' => true] + ($result ?: [])
                 );
-            } catch (Exception $e) {
+            } catch (Exception $exception) {
                 echo Json::encode([
                     'success' => false,
-                    'message' => 'Exception: ' . $e->getMessage()
+                    'message' => $exception->getMessage()
                 ]);
             }
         } else {
