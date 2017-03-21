@@ -17,9 +17,12 @@ class MailsController extends Controller
     {
         $mailSender = new GoogleMailSender();
 
-        $mailSender->setSubject('Test');
-        $mailSender->setMessage('hello');
-        $mailSender->addRecipient('wilkowski.kontakt@gmail.com');
+        $mailSender->setSubject($this->params['subject']);
+        $mailSender->setMessage($this->params['message']);
+
+        foreach (explode(',', $this->params['recipients']) as $recipient) {
+            $mailSender->addRecipient($recipient);
+        }
 
         try {
             $mailSender->send();
