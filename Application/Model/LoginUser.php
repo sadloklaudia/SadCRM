@@ -2,6 +2,7 @@
 namespace Application\Model;
 
 use Exception;
+use Model\Password;
 use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Functions;
 use Ouzo\Utilities\Json;
@@ -20,7 +21,7 @@ class LoginUser
         if ($login && $password) {
             self::$loggedUser = User::where([
                 'login' => $login,
-                'password' => $password
+                'password' => Password::hash($password)
             ])->fetch();
         }
     }
