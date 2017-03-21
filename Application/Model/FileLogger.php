@@ -16,7 +16,7 @@ class FileLogger extends OnScreenLogger
         if (!file_exists($path)) {
             file_put_contents($path, "");
         }
-        $output = fopen($path, "w");
+        $output = fopen($path, "a");
         fwrite($output, $data);
         fclose($output);
     }

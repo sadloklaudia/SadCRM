@@ -30,5 +30,5 @@ Route::get('/report/user/phones/:interval', 'reports#phones');
 Route::get('/report/user/sales', 'reports#sales');
 Route::get('/report/user/:id', 'reports#user');
 
-Route::get('/mail', 'mails#singleMail');
+Route::post('/mail', 'mails#singleMail');
 Route::post('/mails', 'mails#manyMails');
