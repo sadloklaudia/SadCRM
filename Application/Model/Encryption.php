@@ -1,9 +1,11 @@
 <?php
-namespace Model;
+namespace Application\Model;
 
 class Encryption
 {
-    public static function encrypt($input, $key)
+    const KEY = '9308167974dd0ce9';
+
+    public static function encrypt($input, $key = self::KEY)
     {
         $size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
         $input = Encryption::pkcs5_pad($input, $size);
@@ -23,7 +25,7 @@ class Encryption
         return $text . str_repeat(chr($pad), $pad);
     }
 
-    public static function decrypt($input, $key)
+    public static function decrypt($input, $key = self::KEY)
     {
         $decrypted = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,

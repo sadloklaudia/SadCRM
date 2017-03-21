@@ -31,20 +31,20 @@ class LoginUser
         if (LoginUser::isLogged()) {
             try {
                 $result = Functions::call($function, self::$loggedUser);
-                echo Json::encode(
+                EncryptedMessages::printEncrypted(Json::encode(
                     ['success' => true] + ($result ?: [])
-                );
+                ));
             } catch (Exception $exception) {
-                echo Json::encode([
+                EncryptedMessages::printEncrypted(Json::encode([
                     'success' => false,
                     'message' => $exception->getMessage()
-                ]);
+                ]));
             }
         } else {
-            echo Json::encode([
+            EncryptedMessages::printEncrypted(Json::encode([
                 'success' => false,
                 'message' => 'Invalid login or password'
-            ]);
+            ]));
         }
     }
 

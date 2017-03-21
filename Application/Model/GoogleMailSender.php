@@ -19,17 +19,15 @@ class GoogleMailSender
     protected function createMailer()
     {
         $mailer = new PHPMailer();
-        $mailer->IsSMTP(); // enable SMTP
+        $mailer->isSMTP(); // enable SMTP
         $mailer->SMTPDebug = 1;
         $mailer->SMTPAuth = true;
         $mailer->SMTPSecure = 'ssl'; // REQUIRED for Gmail
         $mailer->Host = 'smtp.gmail.com';
         $mailer->Port = 465; // or 587
-        $mailer->IsHTML(true);
+        $mailer->isHTML(true);
         $mailer->Username = self::GMAIL_SMTP_USERNAME;
         $mailer->Password = self::GMAIL_SMTP_PASSWORD;
-
-        $mailer->SetFrom(self::GMAIL_SMTP_USERNAME);
 
         return $mailer;
     }

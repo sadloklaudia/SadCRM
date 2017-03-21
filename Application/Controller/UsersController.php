@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Application\Model\LoginUser;
 use Application\Model\User;
+use Application\Model\EncryptedMessages;
 use Ouzo\Controller;
 use Ouzo\Utilities\Json;
 
@@ -11,6 +12,7 @@ class UsersController extends Controller
     public function init()
     {
         $this->header('Content-Type: application/json');
+        $this->params = EncryptedMessages::decryptMessage($this);
     }
 
     public function login()
