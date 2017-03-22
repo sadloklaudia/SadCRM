@@ -20,8 +20,10 @@ class LoginUser
         if ($login && $password) {
             /** @var User $user */
             $user = User::where(['login' => $login])->fetch();
-            if ($user->password == Password::hash($password, $user->salt)) {
-                self::$loggedUser = $user;
+            if ($user) {
+                if ($user->password == Password::hash($password, $user->salt)) {
+                    self::$loggedUser = $user;
+                }
             }
         }
     }
