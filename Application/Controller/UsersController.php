@@ -1,11 +1,11 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\EncryptedMessages;
 use Application\Model\LoginUser;
 use Application\Model\User;
-use Application\Model\EncryptedMessages;
 use Ouzo\Controller;
-use Ouzo\Utilities\Json;
+use Ouzo\Utilities\Arrays;
 
 class UsersController extends Controller
 {
@@ -32,22 +32,38 @@ class UsersController extends Controller
         });
     }
 
-    public function findByName()
+    public function find()
     {
-        $user = User::where([
-            'name' => $this->params['name']
-        ])->fetchAll();
+        LoginUser::login($this->params);
 
-        echo Json::encode(['users' => $user]);
+        LoginUser::ifLogged(function () {
+            return User::where([
+                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+            ])->fetchAll();
+        });
     }
 
-    public function findBySurname()
+    public function createUser()
     {
-        $user = User::where([
-            'surname' => $this->params['surname']
-        ])->fetchAll();
+        LoginUser::login($this->params);
 
-        echo Json::encode(['users' => $user]);
+        LoginUser::ifLogged(function () {
+            User::create(
+                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+            );
+        });
+    }
+
+    public function updateUser()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            $user = User::findById($this->params['id']);
+            $user->updateAttributes(
+                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+            );
+        });
     }
 
     public function changePassword()
