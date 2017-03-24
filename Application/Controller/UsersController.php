@@ -3,7 +3,9 @@ namespace Application\Controller;
 
 use Application\Model\EncryptedMessages;
 use Application\Model\LoginUser;
+use Application\Model\Password;
 use Application\Model\User;
+use Application\Model\SaltGenerator;
 use Ouzo\Controller;
 use Ouzo\Utilities\Arrays;
 
@@ -60,7 +62,10 @@ class UsersController extends Controller
 
         LoginUser::ifLogged(function () {
             User::create(
-                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+                Arrays::filterByAllowedKeys(
+                    $this->saltifyUserPassword($this->params),
+                    User::getFieldsWithoutPrimaryKey()
+                )
             );
         });
     }
@@ -72,7 +77,10 @@ class UsersController extends Controller
         LoginUser::ifLogged(function () {
             $user = User::findById($this->params['id']);
             $user->updateAttributes(
-                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+                Arrays::filterByAllowedKeys(
+                    $this->saltifyUserPassword($this->params),
+                    User::getFieldsWithoutPrimaryKey()
+                )
             );
         });
     }
@@ -83,8 +91,16 @@ class UsersController extends Controller
 
         LoginUser::ifLogged(function (User $user) {
             $user->updateAttributes([
-                'password' => $this->params['new_password']
+                'password' => Password::hash($this->params['new_password'], $user->salt)
             ]);
         });
+    }
+
+    private function saltifyUserPassword($params)
+    {
+        $salt = SaltGenerator::getSalt();
+        $params['salt'] = $salt;
+        $params['password'] = Password::hash($params['password'], $salt);
+        return $params;
     }
 }
