@@ -14,7 +14,7 @@ class TestsController extends Controller
     public function test()
     {
         echo Json::encode([
-            'success' => 'true'
+            'success' => true
         ]);
     }
 }
