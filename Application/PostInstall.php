@@ -33,7 +33,9 @@ class PostInstall
         $devConfig = Path::join($rootPath, 'config', 'dev', 'config.php');
         if (!Files::exists($devConfig)) {
             $success = copy($prodConfig, $devConfig);
-            if (!$success) {
+            if ($success) {
+                echo "Created $devConfig file." . PHP_EOL;
+            } else {
                 throw new Exception("Could not copy config to config-dev environment");
             }
         }
