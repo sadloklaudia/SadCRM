@@ -2,7 +2,7 @@
 namespace Application\Controller;
 
 use Ouzo\Controller;
-use Ouzo\Logger\Logger;
+use Ouzo\Utilities\Json;
 
 class TestsController extends Controller
 {
@@ -13,6 +13,8 @@ class TestsController extends Controller
 
     public function test()
     {
-        Logger::getLogger(__CLASS__)->debug("Siema");
+        echo Json::encode([
+            'success' => 'true'
+        ]);
     }
 }

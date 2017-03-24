@@ -6,7 +6,7 @@ $config['db']['driver'] = 'mysql';
 $config['db']['host'] = 'mysql.hostinger.pl';
 $config['db']['port'] = '3306';
 
-$config['global']['prefix_system'] = '/';
+$config['global']['prefix_system'] = '';
 $config['sql_dialect'] = '\\Ouzo\\Db\\Dialect\\MySqlDialect';
 $config['debug'] = true;
 
