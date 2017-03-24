@@ -30,3 +30,5 @@ Route::get('/report/user/:id', 'reports#user');
 
 Route::post('/mail', 'mails#singleMail');
 Route::post('/mails', 'mails#manyMails');
+
+Route::get('/download', 'downloads#download');
