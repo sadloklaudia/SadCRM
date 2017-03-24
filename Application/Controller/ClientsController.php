@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Model\Client;
 use Application\Model\LoginUser;
 use Ouzo\Controller;
+use Ouzo\Restrictions;
 use Ouzo\Utilities\Arrays;
 
 class ClientsController extends Controller
@@ -18,9 +19,19 @@ class ClientsController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            return Client::where([
+            $query = Client::where([
                 Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
-            ])->fetchAll();
+            ]);
+            if ($this->params['has_mail']) {
+                $query->where('mail', Restrictions::notEqualTo(''));
+            }
+            if ($this->params['has_sellChance']) {
+                $query->where('sellChance', Restrictions::isNotNull());
+            }
+            if ($this->params['telDateSoonerThan']) {
+                $query->where('telDate', Restrictions::greaterOrEqualTo($this->params['telDateSoonerThan']));
+            }
+            return $query->fetchAll();
         });
     }
 

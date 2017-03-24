@@ -4,6 +4,7 @@ use Ouzo\Routing\Route;
 Route::get('/', 'tests#test');
 
 Route::get('/user','users#find');
+Route::get('/user/byId','users#findById');
 Route::post('/user/login', 'users#login');
 Route::post('/user/create', 'users#createUser');
 Route::post('/user/update', 'users#updateUser');

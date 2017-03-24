@@ -43,6 +43,15 @@ class UsersController extends Controller
         });
     }
 
+    public function findById()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            return User::findById($this->params['id']);
+        });
+    }
+
     public function createUser()
     {
         LoginUser::login($this->params);
