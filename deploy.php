@@ -1,23 +1,23 @@
 <?php
 
 header("Content-Type: text/plain");
-deploy("SadCRM");
+deploy("SadCRM.zip", "public_html");
 
-function deploy($name)
+function deploy($zipName, $name)
 {
     try {
-        removeFromFolder($name);
+        removeContentsFromFolder($name);
         echo "Removed contents folder $name.\n";
 
-        echo "Extracting \"$name.zip\"...\n";
-        extractFromZip($name);
+        echo "Extracting \"$zipName\"...\n";
+        extractFromZip($zipName);
 
     } catch (Exception $exception) {
         echo "Could not deploy \"$name\". " . $exception->getMessage() . "\n";
     }
 }
 
-function removeFromFolder($directoryName)
+function removeContentsFromFolder($directoryName)
 {
     if (!is_dir($directoryName)) {
         return;
@@ -27,7 +27,7 @@ function removeFromFolder($directoryName)
         if (!in_array($file, ['.', '..'])) {
             $full = $directoryName . '/' . $file;
             if (is_dir($full)) {
-                removeFromFolder($full);
+                removeContentsFromFolder($full);
                 rmdir($full);
             } else {
                 if (is_file($full) || is_link($full)) {
@@ -54,16 +54,16 @@ function makeWritable($filename)
 
 function extractFromZip($name)
 {
-    if (!is_file("$name.zip")) {
-        throw new Exception("File \"$name.zip\" does not exists.");
+    if (!is_file($name)) {
+        throw new Exception("File \"$name\" does not exists.");
     }
     $zip = new ZipArchive();
     try {
-        if (!$zip->open("$name.zip")) {
-            throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
+        if (!$zip->open($name)) {
+            throw new Exception("Could not unzip \"$name\". " . $zip->getStatusString());
         }
         if (!$zip->extractTo(getcwd() . DIRECTORY_SEPARATOR)) {
-            throw new Exception("Could not unzip \"$name.zip\". " . $zip->getStatusString());
+            throw new Exception("Could not unzip \"$name\". " . $zip->getStatusString());
         }
         echo "Extracted.\n";
     } finally {
