@@ -31,7 +31,18 @@ class ClientsController extends Controller
             if ($this->params['telDateSoonerThan']) {
                 $query->where('telDate', Restrictions::greaterOrEqualTo($this->params['telDateSoonerThan']));
             }
-            return $query->fetchAll();
+            return [
+                'clients' => $query->fetchAll()
+            ];
+        });
+    }
+
+    public function findById()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            return ['client' => Client::findById($this->params['id'])];
         });
     }
 

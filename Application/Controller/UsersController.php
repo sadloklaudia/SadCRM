@@ -37,9 +37,11 @@ class UsersController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            return User::where([
-                Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
-            ])->fetchAll();
+            return [
+                'users' => User::where([
+                    Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
+                ])->fetchAll()
+            ];
         });
     }
 
@@ -48,7 +50,7 @@ class UsersController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            return User::findById($this->params['id']);
+            return ['user' => User::findById($this->params['id'])];
         });
     }
 

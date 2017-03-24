@@ -11,6 +11,7 @@ Route::post('/user/update', 'users#updateUser');
 Route::put('/user/password', 'users#changePassword');
 
 Route::get('/client', 'clients#find');
+Route::get('/client/byId','clients#findById');
 Route::post('/client/create', 'clients#createClient');
 Route::post('/client/update', 'clients#updateClient');
 
