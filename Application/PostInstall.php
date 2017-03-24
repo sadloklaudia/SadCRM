@@ -2,6 +2,7 @@
 namespace Application;
 
 use Exception;
+use Ouzo\Utilities\Files;
 use Ouzo\Utilities\Path;
 
 class PostInstall
@@ -30,8 +31,11 @@ class PostInstall
 
         $prodConfig = Path::join($rootPath, 'config', 'prod', 'config.php');
         $devConfig = Path::join($rootPath, 'config', 'dev', 'config.php');
-        if (!copy($prodConfig, $devConfig)) {
-            throw new Exception("Could not copy config to config-dev environment");
+        if (!Files::exists($devConfig)) {
+            $success = copy($prodConfig, $devConfig);
+            if (!$success) {
+                throw new Exception("Could not copy config to config-dev environment");
+            }
         }
     }
 }
