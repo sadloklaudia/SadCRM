@@ -15,6 +15,7 @@ Route::get('/client/byId','clients#findById');
 Route::post('/client/create', 'clients#createClient');
 Route::post('/client/update', 'clients#updateClient');
 
+Route::get('/address/byId', 'addresses#findById');
 Route::post('/address/create', 'addresses#createAddress');
 Route::post('/address/update', 'addresses#updateAddress');
 

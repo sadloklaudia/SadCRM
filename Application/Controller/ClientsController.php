@@ -22,14 +22,14 @@ class ClientsController extends Controller
             $query = Client::where([
                 Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
             ]);
-            if ($this->params['has_mail']) {
-                $query->where('mail', Restrictions::notEqualTo(''));
+            if (Arrays::getValue($this->params, 'has_mail')) {
+                $query->where(['mail' => Restrictions::notEqualTo('')]);
             }
-            if ($this->params['has_sellChance']) {
-                $query->where('sellChance', Restrictions::isNotNull());
+            if (Arrays::getValue($this->params, 'has_sellChance')) {
+                $query->where(['sellChance' => Restrictions::isNotNull()]);
             }
-            if ($this->params['telDateSoonerThan']) {
-                $query->where('telDate', Restrictions::greaterOrEqualTo($this->params['telDateSoonerThan']));
+            if (Arrays::getValue($this->params, 'telDateSoonerThan')) {
+                $query->where(['telDate' => Restrictions::greaterOrEqualTo($this->params['telDateSoonerThan'])]);
             }
             return [
                 'clients' => $query->fetchAll()

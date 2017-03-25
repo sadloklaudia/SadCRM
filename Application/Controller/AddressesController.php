@@ -13,14 +13,24 @@ class AddressesController extends Controller
         $this->header('Content-Type: application/json');
     }
 
+    public function findById()
+    {
+        LoginUser::login($this->params);
+
+        LoginUser::ifLogged(function () {
+            return ['address' => Address::findById($this->params['id'])];
+        });
+    }
+
     public function createAddress()
     {
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            Address::create(
+            $address = Address::create(
                 Arrays::filterByAllowedKeys($this->params, Address::getFieldsWithoutPrimaryKey())
             );
+            return ['id' => $address->getId()];
         });
     }
 
