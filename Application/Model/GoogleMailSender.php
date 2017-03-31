@@ -5,6 +5,8 @@ use PHPMailer;
 
 class GoogleMailSender
 {
+    const FROM_NAME = 'SadCRM';
+
     const GMAIL_SMTP_USERNAME = 'hosting.strony.php@gmail.com';
     const GMAIL_SMTP_PASSWORD = '76a5ba50d31';
 
@@ -28,6 +30,7 @@ class GoogleMailSender
         $mailer->isHTML(true);
         $mailer->Username = self::GMAIL_SMTP_USERNAME;
         $mailer->Password = self::GMAIL_SMTP_PASSWORD;
+        $mailer->setFrom(self::GMAIL_SMTP_USERNAME, self::FROM_NAME);
 
         return $mailer;
     }
