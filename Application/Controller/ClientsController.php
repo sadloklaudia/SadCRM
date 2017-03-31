@@ -19,9 +19,9 @@ class ClientsController extends Controller
         LoginUser::login($this->params);
 
         LoginUser::ifLogged(function () {
-            $query = Client::where([
+            $query = Client::where(
                 Arrays::filterByAllowedKeys($this->params, Client::getFieldsWithoutPrimaryKey())
-            ]);
+            );
             if (Arrays::getValue($this->params, 'has_mail')) {
                 $query->where(['mail' => Restrictions::notEqualTo('')]);
             }
