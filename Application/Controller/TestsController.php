@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\Application;
 use Ouzo\Controller;
 use Ouzo\Utilities\Json;
 
@@ -14,7 +15,8 @@ class TestsController extends Controller
     public function test()
     {
         echo Json::encode([
-            'success' => true
+            'success' => true,
+            'version' => Application::VERSION
         ]);
     }
 }

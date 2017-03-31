@@ -1,11 +1,12 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\Application;
 use Application\Model\EncryptedMessages;
 use Application\Model\LoginUser;
 use Application\Model\Password;
-use Application\Model\User;
 use Application\Model\SaltGenerator;
+use Application\Model\User;
 use Ouzo\Controller;
 use Ouzo\Utilities\Arrays;
 
@@ -23,6 +24,7 @@ class UsersController extends Controller
 
         LoginUser::ifLogged(function (User $user) {
             return [
+                'version' => Application::VERSION,
                 'user' => [
                     'id' => $user->getId(),
                     'login' => $user->login,
