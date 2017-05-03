@@ -42,9 +42,9 @@ class UsersController extends Controller
 
         LoginUser::ifLogged(function () {
             return [
-                'users' => User::where([
+                'users' => User::where(
                     Arrays::filterByAllowedKeys($this->params, User::getFieldsWithoutPrimaryKey())
-                ])->fetchAll()
+                )->fetchAll()
             ];
         });
     }
