@@ -26,7 +26,7 @@ class ClientsController extends Controller
                 $query->where(['mail' => Restrictions::notEqualTo('')]);
             }
             if (Arrays::getValue($this->params, 'has_sellChance')) {
-                $query->where(['sellChance' => Restrictions::isNotNull()]);
+                $query->where(['sellChance' => Restrictions::notEqualTo("null")]);
             }
             if (Arrays::getValue($this->params, 'telDateSoonerThan')) {
                 $query->where(['telDate' => Restrictions::greaterOrEqualTo($this->params['telDateSoonerThan'])]);
